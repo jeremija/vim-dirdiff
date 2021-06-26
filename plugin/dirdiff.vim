@@ -528,15 +528,14 @@ function! <SID>DirDiffOpen()
 
         if exists("s:LastMode")
             if s:LastMode == 2
-                call <SID>Drop(previousFileA)
-                silent exec "edit ".s:FilenameA
-                diffthis
-                silent exec "bd ".bufnr(previousFileA)
-
                 call <SID>Drop(previousFileB)
                 silent exec "edit ".s:FilenameB
-                diffthis
                 silent exec "bd ".bufnr(previousFileB)
+
+                call <SID>Drop(previousFileA)
+                silent exec "bd ".bufnr(previousFileA)
+
+                silent exec "vert diffsplit ".s:FilenameA
             else
                 let previousFile = (s:LastMode == "A") ? previousFileA : previousFileB
                 call <SID>Drop(previousFile)
